@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.header {
+    height: 20vh;
+    border: 1px solid red
+}
+
+.main-content {
+    height: 70vh;
+    border: 1px solid red
+}
+
+.footer {
+    height: 10vh;
+    border: 1px solid red
+}
