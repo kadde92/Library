@@ -7,19 +7,38 @@ body {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    flex-basis: 100%;
 }
 
 .header {
-    height: 20vh;
-    border: 1px solid red
+    height: 10vh;
+    border: 1px solid red;
 }
 
 .main-content {
-    height: 70vh;
-    border: 1px solid red
+    height: 85vh;
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+
+}
+
+.card-area {
+    width: 800px;
+    height: 100%;
+    border: 1px solid red;
+}
+
+.oneCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 200px;
 }
 
 .footer {
-    height: 10vh;
-    border: 1px solid red
+    height: 5vh;
+    border: 1px solid red;
 }
