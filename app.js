@@ -25,20 +25,15 @@ Book.prototype.changeStatus = function () {
     }
 }
 
-let ma = new Book('Lotr', 'Tolkien', 200)
-let ba = new Book('Harry', 'Alex', 300)
 
-addBookToLibrary(ma)
-addBookToLibrary(ba)
-
-console.table(myLibrary)
+// console.table(myLibrary)
 
 
 // function that loops through the array and displays the added book-objects as an individual card on the page
+function DisplayCard() {
+    const cardDiv = document.querySelector('.card-area')
 
-const cardDiv = document.querySelector('.card-area')
-
-// if (myLibrary) {
+    // if (myLibrary) {
     myLibrary.forEach(object => {
         const card = document.createElement('div')
         card.classList.add('oneCard')
@@ -48,10 +43,15 @@ const cardDiv = document.querySelector('.card-area')
         const cardPages = document.createElement('p')
         const cardIsRead = document.createElement('p')
 
-       cardAuthor.textContent = object.author
-       cardTitle.textContent = object.title
-       cardPages.textContent = object.pages
-       cardIsRead.textContent = object.isRead
+        cardAuthor.textContent = `Author: ${object.author}`
+        cardTitle.textContent = `Title: ${object.title}`
+        cardPages.textContent = `Pages: ${object.pages}`
+        // cardIsRead.textContent = object.isRead
+        if (object.isRead) {
+            cardIsRead.textContent = 'Read'
+        } else {
+            cardIsRead.textContent = 'Not read'
+        }
 
         card.appendChild(cardAuthor)
         card.appendChild(cardTitle)
@@ -61,8 +61,59 @@ const cardDiv = document.querySelector('.card-area')
 
         cardDiv.appendChild(card)
     })
+}
 
 
 
+// remove a book with a button from the book-card, so 1. add a button to the card, 2. make the button remove the book from the array
 
 
+let ma = new Book('Lotr', 'Tolkien', 200)
+let ba = new Book('Harry', 'Alex', 300)
+let ca = new Book('Jarmo', 'Jokul', 600)
+
+addBookToLibrary(ma)
+addBookToLibrary(ba)
+
+addBookToLibrary(ca)
+
+// DisplayCard()
+ca.changeStatus()
+ma.changeStatus()
+ma.changeStatus()
+// DisplayCard()
+
+// myLibrary.pop(ba)
+
+
+
+DisplayCard()
+
+
+// new book button
+
+// form for the new book
+
+// read the data from the form and add the new book to the array
+
+let formTitle = document.getElementById('title')
+let formAuthor = document.getElementById('author')
+let formPages = document.getElementById('pages')
+let formStatus = document.getElementById('status')
+
+
+function addNew() {
+    let newBook = new Book(formTitle.value, formAuthor.value, formPages.value)
+    addBookToLibrary(newBook)
+    DisplayCard()
+
+
+}
+
+
+
+// add eventlistener to the button
+
+const addBtn = document.querySelector('#addnew')
+
+addBtn.addEventListener('click',addNew)
