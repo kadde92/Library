@@ -67,6 +67,7 @@ function DisplayCard() {
 
 // remove a book with a button from the book-card, so 1. add a button to the card, 2. make the button remove the book from the array
 
+/*
 
 let ma = new Book('Lotr', 'Tolkien', 200)
 let ba = new Book('Harry', 'Alex', 300)
@@ -89,6 +90,7 @@ ma.changeStatus()
 
 DisplayCard()
 
+*/
 
 // new book button
 
@@ -106,8 +108,11 @@ function addNew() {
     let newBook = new Book(formTitle.value, formAuthor.value, formPages.value)
     addBookToLibrary(newBook)
     DisplayCard()
+    formTitle.value = ''
+    formAuthor.value = ''
+    formPages.value = ''
 
-
+    
 }
 
 
