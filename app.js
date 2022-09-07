@@ -101,24 +101,57 @@ DisplayCard()
 let formTitle = document.getElementById('title')
 let formAuthor = document.getElementById('author')
 let formPages = document.getElementById('pages')
-let formStatus = document.getElementById('status')
+// let formStatusRead = document.getElementById('choice1')
+// let formStatusNotRead = document.getElementById('choice2')
 
 
 function addNew() {
     let newBook = new Book(formTitle.value, formAuthor.value, formPages.value)
-    addBookToLibrary(newBook)
-    DisplayCard()
-    formTitle.value = ''
-    formAuthor.value = ''
-    formPages.value = ''
+    if (checkIfEmpty(formTitle.value, formAuthor.value, formPages.value)) {
+        if(checkRadio() === 'read') {
+            newBook.changeStatus()
+        }
+        addBookToLibrary(newBook)
+        DisplayCard()
+        formTitle.value = ''
+        formAuthor.value = ''
+        formPages.value = ''
 
-    
+    }
+
+
 }
 
+
+
+function checkIfEmpty(a, b, c) {
+    if (a === '' || b === '' || c === '') return false
+    return true
+}
 
 
 // add eventlistener to the button
 
 const addBtn = document.querySelector('#addnew')
 
-addBtn.addEventListener('click',addNew)
+addBtn.addEventListener('click', addNew)
+
+// radio button verifier event
+//
+
+const radioButtons = document.querySelectorAll('input[name="status"]');
+addBtn.addEventListener('click', checkRadio)
+
+
+function checkRadio() {
+    let selected;
+    for (const radioButton of radioButtons) {
+        if (radioButton.checked) {
+            selected = radioButton.value;
+            console.log(selected)
+            return selected
+            break;
+        }
+    }
+}
+
