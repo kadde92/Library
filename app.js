@@ -30,11 +30,15 @@ Book.prototype.changeStatus = function () {
 
 
 // function that loops through the array and displays the added book-objects as an individual card on the page
+
+const cardDiv = document.querySelector('.card-area')
+
 function DisplayCard() {
-    const cardDiv = document.querySelector('.card-area')
+    // const cardDiv = document.querySelector('.card-area')
 
     // if (myLibrary) {
-    myLibrary.forEach(object => {
+    // myLibrary.forEach(object => {
+    for (let book of myLibrary) {
         const card = document.createElement('div')
         card.classList.add('oneCard')
 
@@ -43,11 +47,11 @@ function DisplayCard() {
         const cardPages = document.createElement('p')
         const cardIsRead = document.createElement('p')
 
-        cardAuthor.textContent = `Author: ${object.author}`
-        cardTitle.textContent = `Title: ${object.title}`
-        cardPages.textContent = `Pages: ${object.pages}`
+        cardAuthor.textContent = `Author: ${book.author}`
+        cardTitle.textContent = `Title: ${book.title}`
+        cardPages.textContent = `Pages: ${book.pages}`
         // cardIsRead.textContent = object.isRead
-        if (object.isRead) {
+        if (book.isRead) {
             cardIsRead.textContent = 'Read'
         } else {
             cardIsRead.textContent = 'Not read'
@@ -60,38 +64,24 @@ function DisplayCard() {
 
 
         cardDiv.appendChild(card)
-    })
+    }
 }
 
+// function for removing all child elements (books)
+
+// function removeChildElements() {
+//     // const cards = document.querySelectorAll('.oneCard')
+//     for (let child of cardDiv) {
+//         cardDiv.removeChild(child)
+//     }
+// }
 
 
-// remove a book with a button from the book-card, so 1. add a button to the card, 2. make the button remove the book from the array
-
-/*
-
-let ma = new Book('Lotr', 'Tolkien', 200)
-let ba = new Book('Harry', 'Alex', 300)
-let ca = new Book('Jarmo', 'Jokul', 600)
-
-addBookToLibrary(ma)
-addBookToLibrary(ba)
-
-addBookToLibrary(ca)
-
-// DisplayCard()
-ca.changeStatus()
-ma.changeStatus()
-ma.changeStatus()
-// DisplayCard()
-
-// myLibrary.pop(ba)
-
-
-
-DisplayCard()
-
-*/
-
+function removeChildElements() {
+    while (cardDiv.firstChild) {
+        cardDiv.removeChild(cardDiv.firstChild)
+    }
+}
 // new book button
 
 // form for the new book
@@ -108,10 +98,11 @@ let formPages = document.getElementById('pages')
 function addNew() {
     let newBook = new Book(formTitle.value, formAuthor.value, formPages.value)
     if (checkIfEmpty(formTitle.value, formAuthor.value, formPages.value)) {
-        if(checkRadio() === 'read') {
+        if (checkRadio() === 'read') {
             newBook.changeStatus()
         }
         addBookToLibrary(newBook)
+        removeChildElements()
         DisplayCard()
         formTitle.value = ''
         formAuthor.value = ''
@@ -148,7 +139,6 @@ function checkRadio() {
     for (const radioButton of radioButtons) {
         if (radioButton.checked) {
             selected = radioButton.value;
-            console.log(selected)
             return selected
             break;
         }
