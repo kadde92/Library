@@ -33,12 +33,11 @@ Book.prototype.changeStatus = function () {
 
 const cardDiv = document.querySelector('.card-area')
 
-function DisplayCard() {
-    // const cardDiv = document.querySelector('.card-area')
+function displayCard() {
+    let i = 1
 
-    // if (myLibrary) {
-    // myLibrary.forEach(object => {
     for (let book of myLibrary) {
+        
         const card = document.createElement('div')
         card.classList.add('oneCard')
 
@@ -46,7 +45,10 @@ function DisplayCard() {
         const cardTitle = document.createElement('p')
         const cardPages = document.createElement('p')
         const cardIsRead = document.createElement('p')
+        const removeBtn = document.createElement('button')
+        
 
+        removeBtn.textContent = 'Remove?'
         cardAuthor.textContent = `Author: ${book.author}`
         cardTitle.textContent = `Title: ${book.title}`
         cardPages.textContent = `Pages: ${book.pages}`
@@ -61,21 +63,19 @@ function DisplayCard() {
         card.appendChild(cardTitle)
         card.appendChild(cardPages)
         card.appendChild(cardIsRead)
+        card.appendChild(removeBtn)
+        card.setAttribute('data-index',i)
+
 
 
         cardDiv.appendChild(card)
+        
+        i++
+
     }
 }
 
 // function for removing all child elements (books)
-
-// function removeChildElements() {
-//     // const cards = document.querySelectorAll('.oneCard')
-//     for (let child of cardDiv) {
-//         cardDiv.removeChild(child)
-//     }
-// }
-
 
 function removeChildElements() {
     while (cardDiv.firstChild) {
@@ -96,6 +96,7 @@ let formPages = document.getElementById('pages')
 
 
 function addNew() {
+
     let newBook = new Book(formTitle.value, formAuthor.value, formPages.value)
     if (checkIfEmpty(formTitle.value, formAuthor.value, formPages.value)) {
         if (checkRadio() === 'read') {
@@ -103,16 +104,14 @@ function addNew() {
         }
         addBookToLibrary(newBook)
         removeChildElements()
-        DisplayCard()
+        displayCard()
         formTitle.value = ''
         formAuthor.value = ''
         formPages.value = ''
-
     }
 
 
 }
-
 
 
 function checkIfEmpty(a, b, c) {
@@ -144,4 +143,12 @@ function checkRadio() {
         }
     }
 }
+
+
+
+// add event for clicking the book-card button for removing the book from the display
+
+
+
+// btn for changing the read status
 
