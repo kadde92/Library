@@ -34,10 +34,10 @@ Book.prototype.changeStatus = function () {
 const cardDiv = document.querySelector('.card-area')
 
 function displayCard() {
-    let i = 1
+    let i = 0
 
     for (let book of myLibrary) {
-        
+
         const card = document.createElement('div')
         card.classList.add('oneCard')
 
@@ -46,7 +46,7 @@ function displayCard() {
         const cardPages = document.createElement('p')
         const cardIsRead = document.createElement('p')
         const removeBtn = document.createElement('button')
-        
+
 
         removeBtn.textContent = 'Remove?'
         cardAuthor.textContent = `Author: ${book.author}`
@@ -59,18 +59,24 @@ function displayCard() {
             cardIsRead.textContent = 'Not read'
         }
 
+        // while (i >= 0) {
+        //     buttonEvent()
+        //     break;
+        // }
+
+
         card.appendChild(cardAuthor)
         card.appendChild(cardTitle)
         card.appendChild(cardPages)
         card.appendChild(cardIsRead)
         card.appendChild(removeBtn)
-        card.setAttribute('data-index',i)
-
-
+        card.setAttribute('data-index', i)
+        removeBtn.setAttribute('class', 'remove')
 
         cardDiv.appendChild(card)
-        
+
         i++
+
 
     }
 }
@@ -96,7 +102,8 @@ let formPages = document.getElementById('pages')
 
 
 function addNew() {
-
+    // const remBtn = document.querySelector('.remove')
+    // remBtn.removeEventListener('click', removeBook)
     let newBook = new Book(formTitle.value, formAuthor.value, formPages.value)
     if (checkIfEmpty(formTitle.value, formAuthor.value, formPages.value)) {
         if (checkRadio() === 'read') {
@@ -105,9 +112,11 @@ function addNew() {
         addBookToLibrary(newBook)
         removeChildElements()
         displayCard()
+        buttonEvent()
         formTitle.value = ''
         formAuthor.value = ''
         formPages.value = ''
+
     }
 
 
@@ -147,6 +156,27 @@ function checkRadio() {
 
 
 // add event for clicking the book-card button for removing the book from the display
+
+function removeBook(e) {
+    
+    let removeIndex = parseInt(e.currentTarget.parentNode.getAttribute('data-index'))
+    console.log(removeIndex)
+    console.log(myLibrary.splice(removeIndex,1))
+    removeChildElements()
+    displayCard()
+    buttonEvent()
+
+}
+
+function buttonEvent() {
+
+    const bookList = Array.from(document.getElementsByClassName('oneCard'))
+    bookList.forEach(book => {
+        const bookBtn = book.querySelector('button')
+        bookBtn.addEventListener('click', removeBook)
+        
+    });
+}
 
 
 
