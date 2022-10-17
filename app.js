@@ -41,14 +41,16 @@ function displayCard() {
         const card = document.createElement('div')
         card.classList.add('oneCard')
 
-        const cardAuthor = document.createElement('p')
         const cardTitle = document.createElement('p')
+        const cardAuthor = document.createElement('p')
         const cardPages = document.createElement('p')
         const cardIsRead = document.createElement('p')
         const removeBtn = document.createElement('button')
+        const changeBtn = document.createElement('button')
 
 
         removeBtn.textContent = 'Remove?'
+        changeBtn.textContent = 'Change Status?'
         cardAuthor.textContent = `Author: ${book.author}`
         cardTitle.textContent = `Title: ${book.title}`
         cardPages.textContent = `Pages: ${book.pages}`
@@ -65,13 +67,16 @@ function displayCard() {
         // }
 
 
-        card.appendChild(cardAuthor)
         card.appendChild(cardTitle)
+        card.appendChild(cardAuthor)
         card.appendChild(cardPages)
         card.appendChild(cardIsRead)
         card.appendChild(removeBtn)
+        card.appendChild(changeBtn)
         card.setAttribute('data-index', i)
         removeBtn.setAttribute('class', 'remove')
+        changeBtn.setAttribute('class', 'change')
+
 
         cardDiv.appendChild(card)
 
@@ -113,6 +118,7 @@ function addNew() {
         removeChildElements()
         displayCard()
         buttonEvent()
+        toggleEvent()
         formTitle.value = ''
         formAuthor.value = ''
         formPages.value = ''
@@ -160,11 +166,11 @@ function checkRadio() {
 function removeBook(e) {
     
     let removeIndex = parseInt(e.currentTarget.parentNode.getAttribute('data-index'))
-    console.log(removeIndex)
-    console.log(myLibrary.splice(removeIndex,1))
+    myLibrary.splice(removeIndex,1)
     removeChildElements()
     displayCard()
     buttonEvent()
+    toggleEvent()
 
 }
 
@@ -172,7 +178,7 @@ function buttonEvent() {
 
     const bookList = Array.from(document.getElementsByClassName('oneCard'))
     bookList.forEach(book => {
-        const bookBtn = book.querySelector('button')
+        const bookBtn = book.querySelector('button.remove')
         bookBtn.addEventListener('click', removeBook)
         
     });
@@ -182,3 +188,24 @@ function buttonEvent() {
 
 // btn for changing the read status
 
+function toggleEvent() {
+    const list = Array.from(document.getElementsByClassName('oneCard'))
+    list.forEach(book => {
+        const statusBtn = book.querySelector('button.change')
+        statusBtn.addEventListener('click', toggleStatus)
+        
+    });
+}
+
+
+function toggleStatus(e) {
+
+    // console.log('paska')
+    let removeIndex = parseInt(e.currentTarget.parentNode.getAttribute('data-index'))
+    myLibrary[removeIndex].changeStatus()
+    removeChildElements()
+    displayCard()
+    buttonEvent()
+    toggleEvent()
+
+}
